@@ -263,3 +263,103 @@ curl -X POST \
   "message": "Successfully logged out"
 }
 ```
+
+### POST /captains/register
+
+#### Description
+
+Registers a new captain.
+
+#### Request Body
+
+- `fullname` (object)
+  - `firstname` (string): Required, minimum length of 3 characters.
+  - `lastname` (string): Optional, minimum length of 3 characters.
+- `email` (string): Required, must be a valid email.
+- `password` (string): Required, minimum length of 6 characters.
+- `vehicle` (object)
+  - `color` (string): Required, minimum length of 3 characters.
+  - `plate` (string): Required, minimum length of 3 characters.
+  - `capacity` (number): Required, must be at least 1.
+  - `vehicleType` (string): Required, must be one of 'car', 'motorcycle', 'auto'.
+
+#### Responses
+
+- `201 Created`
+
+  - Body: JSON object containing the authentication token and captain details.
+
+  ```json
+  {
+    "token": "string",
+    "captain": {
+      "_id": "string",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "red",
+        "plate": "ABC123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    }
+  }
+  ```
+
+- `400 Bad Request`
+  - Body: JSON object containing validation errors.
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Invalid email format",
+        "param": "email",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+#### Example Request
+
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Example Response
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "captain": {
+    "_id": "60d0fe4f5311236168a109ca",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
