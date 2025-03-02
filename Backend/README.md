@@ -158,3 +158,108 @@ Logs in an existing user.
   }
 }
 ```
+
+### GET /users/profile
+
+#### Description
+
+Retrieves the profile information of the authenticated user.
+
+#### Headers
+
+- `Authorization` (string): Required, Bearer token received from login/register
+
+#### Responses
+
+- `200 OK`
+
+  - Body: JSON object containing user details.
+
+  ```json
+  {
+    "user": {
+      "_id": "60d0fe4f5311236168a109ca",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+  }
+  ```
+
+- `401 Unauthorized`
+  - Body: JSON object containing error message
+  ```json
+  {
+    "message": "Authentication required"
+  }
+  ```
+
+#### Example Request
+
+```bash
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
+  http://api.example.com/users/profile
+```
+
+#### Example Response
+
+```json
+{
+  "user": {
+    "_id": "60d0fe4f5311236168a109ca",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+}
+```
+
+### POST /users/logout
+
+#### Description
+
+Logs out the currently authenticated user by invalidating their token. And blacklist the token provided in cookie and headers
+
+#### Headers
+
+- `Authorization` (string): Required, Bearer token received from login/register
+
+#### Responses
+
+- `200 OK`
+
+  - Body: JSON object containing success message
+
+  ```json
+  {
+    "message": "Successfully logged out"
+  }
+  ```
+
+- `401 Unauthorized`
+  - Body: JSON object containing error message
+  ```json
+  {
+    "message": "Authentication required"
+  }
+  ```
+
+#### Example Request
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
+  http://api.example.com/users/logout
+```
+
+#### Example Response
+
+```json
+{
+  "message": "Successfully logged out"
+}
+```
