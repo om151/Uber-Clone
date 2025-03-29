@@ -1,13 +1,13 @@
 import React, { createContext, useState,useContext } from 'react';
 
-export const CaptainDataContext = createContext();
+export const CaptainDataContext = React.createContext();
 
 const CaptainContext = ({ children }) => {
     const [captain, setCaptain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const[error , setError] = useState(null);
 
-    const updateCaptain = async () => {
+    const updateCaptain = async (captainData) => {
         setCaptain(captainData);
     }
 
